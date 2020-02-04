@@ -4,28 +4,54 @@ using UnityEngine;
 
 public class playerMove : MonoBehaviour
 {
-
     private Rigidbody rb;
     public bool jumpBool;
+    private bool playerNumberOne;
+    private GameObject Gamemanager;
+
+    private bool hasSpawnProt;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (this.transform.position.x < 0)
+        {
+            playerNumberOne = true;
+        }
+        StartCoroutine(SpawnProtection());
     }
     void Update()
     {
-
-        if (Input.GetKey("a"))
+        if (playerNumberOne == true)
         {
-            rb.AddForce(-.5f, 0f, 0f, ForceMode.Impulse);
+            if (Input.GetKey("a"))
+            {
+                rb.AddForce(-.5f, 0f, 0f, ForceMode.Impulse);
+            }
+            if (Input.GetKey("d"))
+            {
+                rb.AddForce(.5f, 0f, 0f, ForceMode.Impulse);
+            }
+            if (Input.GetKey("s") && jumpBool == true)
+            {
+                jump();
+                jumpBool = false;
+            }
         }
-        if (Input.GetKey("d"))
+        else
         {
-            rb.AddForce(.5f, 0f, 0f, ForceMode.Impulse);
-        }
-        if (Input.GetKey("s") && jumpBool == true)
-        {
-            jump();
-            jumpBool = false;
+            if (Input.GetKey("j"))
+            {
+                rb.AddForce(-.5f, 0f, 0f, ForceMode.Impulse);
+            }
+            if (Input.GetKey("l"))
+            {
+                rb.AddForce(.5f, 0f, 0f, ForceMode.Impulse);
+            }
+            if (Input.GetKey("k") && jumpBool == true)
+            {
+                jump();
+                jumpBool = false;
+            }
         }
     }
     void jump()
@@ -38,5 +64,22 @@ public class playerMove : MonoBehaviour
         {
             jumpBool = true;
         }
+    }
+    public void PlayerDied()
+    {
+        if (!hasSpawnProt)
+        {
+            Gamemanager = GameObject.Find("GameManager");
+            Gamemanager.GetComponent<gameManager>().PlayerDiedGM(playerNumberOne);
+            Destroy(gameObject);
+        }
+    }
+    IEnumerator SpawnProtection()
+    {
+        hasSpawnProt = true;
+
+        yield return new WaitForSeconds(3);
+
+        hasSpawnProt = false;
     }
 }

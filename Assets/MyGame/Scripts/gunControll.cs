@@ -13,28 +13,61 @@ public class gunControll : MonoBehaviour
     public GameObject bullet;
     private GameObject bulletInst;
     private int i = 0;
+    private bool playerNumberOne;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (this.transform.position.x < 0)
+        {
+            playerNumberOne = true;
+        }
     }
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("q"))
+        if (playerNumberOne == true)
         {
-            rb.AddTorque(0f, 0f, 5f);
-        }
-        if (Input.GetKey("e"))
-        {
-            rb.AddTorque(0f, 0f, -5f);
-        }
-        if (Input.GetKey("2"))
-        {
-            i--;
-            if (i < 0)
+            //rotate the gun left
+            if (Input.GetKey("q"))
             {
-                shoot();
-                i = 20;
+                rb.AddTorque(0f, 0f, 5f);
+            }
+            //rotate the gun right
+            if (Input.GetKey("e"))
+            {
+                rb.AddTorque(0f, 0f, -5f);
+            }
+            //shoot
+            if (Input.GetKey("2"))
+            {
+                i--;
+                if (i < 0)
+                {
+                    shoot();
+                    i = 20;
+                }
+            }
+        }
+        else
+        {
+            //rotate the gun left
+            if (Input.GetKey("u"))
+            {
+                rb.AddTorque(0f, 0f, 5f);
+            }
+            //rotate the gun right
+            if (Input.GetKey("o"))
+            {
+                rb.AddTorque(0f, 0f, -5f);
+            }
+            //shoot
+            if (Input.GetKey("8"))
+            {
+                i--;
+                if (i < 0)
+                {
+                    shoot();
+                    i = 20;
+                }
             }
         }
     }
@@ -45,10 +78,10 @@ public class gunControll : MonoBehaviour
         gunCubeSpawnPos = gunCubeSpawn.transform.position;
         gunCubeSpawnRot = gunCubeSpawn.transform.rotation;
         //Instatiate
-        bulletInst = Instantiate(bullet, gunCubeSpawnPos, gunCubeSpawnRot);
+        bulletInst = Instantiate(bullet, gunCubeSpawnPos, gunCubeSpawnRot) as GameObject;
         //add force
         gunCubeShootPos = gunCubeShoot.transform.position;
         rbBullet = bulletInst.GetComponent<Rigidbody>();
-        rbBullet.AddForce(gunCubeShootPos, ForceMode.Impulse);
+        rbBullet.AddRelativeForce(Vector3.forward, ForceMode.Impulse);
     }
 }
