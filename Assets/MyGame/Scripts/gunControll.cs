@@ -7,8 +7,7 @@ public class gunControll : MonoBehaviour
     private Rigidbody rb;
     public GameObject gunCubeSpawn;
     private Vector3 gunCubeSpawnPos;
-    public GameObject gunCubeShoot;
-    private Vector3 gunCubeShootPos;
+
     private Quaternion gunCubeSpawnRot;
     public GameObject bullet;
     private GameObject bulletInst;
@@ -80,8 +79,7 @@ public class gunControll : MonoBehaviour
         //Instatiate
         bulletInst = Instantiate(bullet, gunCubeSpawnPos, gunCubeSpawnRot) as GameObject;
         //add force
-        gunCubeShootPos = gunCubeShoot.transform.position;
         rbBullet = bulletInst.GetComponent<Rigidbody>();
-        rbBullet.AddRelativeForce(Vector3.forward, ForceMode.Impulse);
+        rbBullet.AddForce(this.transform.up * 2f, ForceMode.Impulse);
     }
 }

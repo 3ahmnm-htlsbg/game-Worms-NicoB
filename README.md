@@ -3,6 +3,7 @@
 ### Project description: 
 Mini worms
 
+Playable version: https://3ahmnm-htlsbg.github.io/game-Worms-NicoB/
 ### Development platform: 
 * Windows 10; 
 * Unity Version: 2019.1.14f1; 
@@ -16,13 +17,13 @@ WebGL 960x600
 -TODO
 
 ### Necessary setup/execution steps: 
--TODO
+WebGL has to be installed + stable internet connection
 
 ### Third party material: 
--TODO
+None
 
 ### Project state: 
-0%
+80%
 
 ### Limitations: 
 None

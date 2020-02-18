@@ -31,7 +31,7 @@ public class playerMove : MonoBehaviour
             {
                 rb.AddForce(.5f, 0f, 0f, ForceMode.Impulse);
             }
-            if (Input.GetKey("s") && jumpBool == true)
+            if (Input.GetKeyDown("s") && jumpBool == true)
             {
                 jump();
                 jumpBool = false;
@@ -47,7 +47,7 @@ public class playerMove : MonoBehaviour
             {
                 rb.AddForce(.5f, 0f, 0f, ForceMode.Impulse);
             }
-            if (Input.GetKey("k") && jumpBool == true)
+            if (Input.GetKeyDown("k") && jumpBool == true)
             {
                 jump();
                 jumpBool = false;
@@ -56,7 +56,7 @@ public class playerMove : MonoBehaviour
     }
     void jump()
     {
-        rb.AddForce(0f, 3f, 0f, ForceMode.Impulse);
+        rb.AddForce(0f, 5f, 0f, ForceMode.Impulse);
     }
     void OnTriggerStay(Collider target)
     {
