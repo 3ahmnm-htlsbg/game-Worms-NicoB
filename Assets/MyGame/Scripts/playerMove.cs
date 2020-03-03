@@ -10,6 +10,10 @@ public class playerMove : MonoBehaviour
     private GameObject Gamemanager;
 
     private bool hasSpawnProt;
+    Material m_Material;
+    [SerializeField] Material redMat;
+    [SerializeField] Material greenMat;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,6 +21,7 @@ public class playerMove : MonoBehaviour
         {
             playerNumberOne = true;
         }
+        m_Material = GetComponent<Renderer>().material;
         StartCoroutine(SpawnProtection());
     }
     void Update()
@@ -77,9 +82,10 @@ public class playerMove : MonoBehaviour
     IEnumerator SpawnProtection()
     {
         hasSpawnProt = true;
+        m_Material.color = Color.red;
 
         yield return new WaitForSeconds(3);
-
+        m_Material.color = Color.green;
         hasSpawnProt = false;
     }
 }

@@ -5,16 +5,21 @@ using UnityEngine;
 public class destroySelf : MonoBehaviour
 {
 
+    bool hasdestroyed = false;
     void Update()
     {
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 4);
     }
     void OnTriggerEnter(Collider target)
     {
         if (target.tag == "Player")
         {
-            target.gameObject.GetComponent<playerMove>().PlayerDied();
-            Destroy(gameObject);
+            if (hasdestroyed == false)
+            {
+                target.gameObject.GetComponent<playerMove>().PlayerDied();
+                hasdestroyed = true;
+            }
+            Destroy(gameObject, 0);
         }
     }
 }

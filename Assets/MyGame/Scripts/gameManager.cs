@@ -11,6 +11,8 @@ public class gameManager : MonoBehaviour
     public Text textPlayerTwo;
     private int lifePlayerTwo;
     private int lifeTotal = 5;
+
+    [SerializeField] private Text textWinner;
     void Start()
     {
         lifePlayerOne = lifeTotal;
@@ -19,17 +21,29 @@ public class gameManager : MonoBehaviour
         Spawn(false);
         updateLife();
     }
+    private void Update()
+    {
+        if (waitForInput == true)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                restartGame();
+                waitForInput = false;
+                textWinner.text = "";
+            }
+        }
+    }
     void Spawn(bool playerOne)
     {
         if (playerOne == true)
         {
             //PlayerOne
-            Instantiate(playerPref, new Vector3(-6.64f, 3.85f, 0f), this.transform.rotation);
+            Instantiate(playerPref, new Vector3(-6.64f, 3.85f, 0f), Quaternion.identity);
         }
         if (playerOne == false)
         {
             //PlayerTwo
-            Instantiate(playerPref, new Vector3(6.64f, 3.85f, 0f), this.transform.rotation);
+            Instantiate(playerPref, new Vector3(6.64f, 3.85f, 0f), Quaternion.identity);
         }
     }
     void updateLife()
@@ -45,7 +59,8 @@ public class gameManager : MonoBehaviour
             updateLife();
             if (lifePlayerOne <= 0)
             {
-                restartGame();
+                playerWon = "PlayerTwo";
+                showWinner();
             }
             Spawn(true);
         }
@@ -55,14 +70,23 @@ public class gameManager : MonoBehaviour
             updateLife();
             if (lifePlayerTwo <= 0)
             {
-                restartGame();
+                playerWon = "PlayerOne";
+                showWinner();
             }
             Spawn(false);
         }
 
     }
+    string playerWon;
+    bool waitForInput;
+    void showWinner()
+    {
+        textWinner.text = playerWon + " has won. Press Enter to restart.";
+        waitForInput = true;
+    }
     void restartGame()
     {
+
         lifePlayerOne = lifeTotal;
         lifePlayerTwo = lifeTotal;
         updateLife();
