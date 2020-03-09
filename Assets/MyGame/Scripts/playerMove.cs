@@ -7,15 +7,14 @@ public class playerMove : MonoBehaviour
     private Rigidbody rb;
     public bool jumpBool;
     private bool playerNumberOne;
-    private GameObject Gamemanager;
+    private GameObject gameManager;
 
     private bool hasSpawnProt;
     Material m_Material;
-    [SerializeField] Material redMat;
-    [SerializeField] Material greenMat;
 
     void Start()
     {
+        gameManager = GameObject.FindWithTag("GameManager");
         rb = GetComponent<Rigidbody>();
         if (this.transform.position.x < 0)
         {
@@ -70,12 +69,19 @@ public class playerMove : MonoBehaviour
             jumpBool = true;
         }
     }
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "PickUp")
+        {
+            gameManager.GetComponent<gameManager>().HealPlayer(playerNumberOne);
+            Destroy(col.gameObject);
+        }
+    }
     public void PlayerDied()
     {
         if (!hasSpawnProt)
         {
-            Gamemanager = GameObject.Find("GameManager");
-            Gamemanager.GetComponent<gameManager>().PlayerDiedGM(playerNumberOne);
+            gameManager.GetComponent<gameManager>().PlayerDiedGM(playerNumberOne);
             Destroy(gameObject);
         }
     }

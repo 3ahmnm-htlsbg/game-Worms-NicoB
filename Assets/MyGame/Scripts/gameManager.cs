@@ -19,7 +19,7 @@ public class gameManager : MonoBehaviour
         lifePlayerTwo = lifeTotal;
         Spawn(true);
         Spawn(false);
-        updateLife();
+        UpdateLife();
     }
     private void Update()
     {
@@ -46,17 +46,29 @@ public class gameManager : MonoBehaviour
             Instantiate(playerPref, new Vector3(6.64f, 3.85f, 0f), Quaternion.identity);
         }
     }
-    void updateLife()
+    void UpdateLife()
     {
         textPlayerOne.text = lifePlayerOne.ToString();
         textPlayerTwo.text = lifePlayerTwo.ToString();
+    }
+    public void HealPlayer(bool playerOne)
+    {
+        if (playerOne == true)
+        {
+            lifePlayerOne += 2;
+        }
+        else
+        {
+            lifePlayerTwo += 2;
+        }
+        UpdateLife();
     }
     public void PlayerDiedGM(bool PlayerOne)
     {
         if (PlayerOne == true)
         {
             lifePlayerOne -= 1;
-            updateLife();
+            UpdateLife();
             if (lifePlayerOne <= 0)
             {
                 playerWon = "PlayerTwo";
@@ -67,7 +79,7 @@ public class gameManager : MonoBehaviour
         if (PlayerOne == false)
         {
             lifePlayerTwo -= 1;
-            updateLife();
+            UpdateLife();
             if (lifePlayerTwo <= 0)
             {
                 playerWon = "PlayerOne";
@@ -89,6 +101,6 @@ public class gameManager : MonoBehaviour
 
         lifePlayerOne = lifeTotal;
         lifePlayerTwo = lifeTotal;
-        updateLife();
+        UpdateLife();
     }
 }
