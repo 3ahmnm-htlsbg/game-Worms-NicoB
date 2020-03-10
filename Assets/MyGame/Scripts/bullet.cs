@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class destroySelf : MonoBehaviour
+public class bullet : MonoBehaviour
 {
 
     bool hasdestroyed = false;
@@ -12,6 +12,7 @@ public class destroySelf : MonoBehaviour
     }
     void OnTriggerEnter(Collider target)
     {
+        Debug.Log("Player Died");
         if (target.tag == "Player")
         {
             if (hasdestroyed == false)

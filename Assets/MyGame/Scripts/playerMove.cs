@@ -79,6 +79,7 @@ public class playerMove : MonoBehaviour
     }
     public void PlayerDied()
     {
+        
         if (!hasSpawnProt)
         {
             gameManager.GetComponent<gameManager>().PlayerDiedGM(playerNumberOne);
