@@ -11,6 +11,7 @@ public class playerMove : MonoBehaviour
 
     private bool hasSpawnProt;
     Material m_Material;
+    public bool pickUpShoot;
 
     void Start()
     {
@@ -69,6 +70,7 @@ public class playerMove : MonoBehaviour
             jumpBool = true;
         }
     }
+
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "PickUp")
@@ -76,15 +78,27 @@ public class playerMove : MonoBehaviour
             gameManager.GetComponent<gameManager>().HealPlayer(playerNumberOne);
             Destroy(col.gameObject);
         }
+        if (col.gameObject.tag == "PickUpShoot")
+        {
+
+            StartCoroutine(CountPickUp());
+            Destroy(col.gameObject);
+        }
     }
     public void PlayerDied()
     {
-        
+
         if (!hasSpawnProt)
         {
             gameManager.GetComponent<gameManager>().PlayerDiedGM(playerNumberOne);
             Destroy(gameObject);
         }
+    }
+    IEnumerator CountPickUp()
+    {
+        pickUpShoot = true;
+        yield return new WaitForSeconds(5);
+        pickUpShoot = false;
     }
     IEnumerator SpawnProtection()
     {

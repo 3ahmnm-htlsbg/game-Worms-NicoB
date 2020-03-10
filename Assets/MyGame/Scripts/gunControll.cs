@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class gunControll : MonoBehaviour
 {
+    [SerializeField] GameObject playerGO;
     private Rigidbody rb;
     public GameObject gunCubeSpawn;
     private Vector3 gunCubeSpawnPos;
@@ -42,7 +43,6 @@ public class gunControll : MonoBehaviour
                 if (i < 0)
                 {
                     shoot();
-                    i = 20;
                 }
             }
         }
@@ -65,19 +65,26 @@ public class gunControll : MonoBehaviour
                 if (i < 0)
                 {
                     shoot();
-                    i = 20;
                 }
             }
         }
     }
+    bool pickUpShoot;
     void shoot()
     {
+        pickUpShoot = playerGO.GetComponent<playerMove>().pickUpShoot;
         Rigidbody rbBullet;
         //get GunCube Pos and Rotation
         gunCubeSpawnPos = gunCubeSpawn.transform.position;
         gunCubeSpawnRot = gunCubeSpawn.transform.rotation;
         //Instatiate
         bulletInst = Instantiate(bullet, gunCubeSpawnPos, gunCubeSpawnRot) as GameObject;
+        i = 20;
+        if (pickUpShoot)
+        {
+            bulletInst.GetComponent<Rigidbody>().mass = bulletInst.GetComponent<Rigidbody>().mass / 2f;
+            i = 10;
+        }
         //add force
         rbBullet = bulletInst.GetComponent<Rigidbody>();
         rbBullet.AddForce(this.transform.up * 2f, ForceMode.Impulse);
