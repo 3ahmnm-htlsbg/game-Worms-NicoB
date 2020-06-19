@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class pickUp : MonoBehaviour
+public class PickUp : MonoBehaviour
 {
     void Update()
     {

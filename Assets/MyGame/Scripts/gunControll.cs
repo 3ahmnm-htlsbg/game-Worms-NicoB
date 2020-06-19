@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gunControll : MonoBehaviour
+public class GunControll : MonoBehaviour
 {
     [SerializeField] GameObject playerGO;
     private Rigidbody rb;
@@ -12,7 +12,10 @@ public class gunControll : MonoBehaviour
     private Quaternion gunCubeSpawnRot;
     public GameObject bullet;
     private GameObject bulletInst;
-    private int i = 0;
+    [SerializeField] GameObject rollerGO;
+    GameObject rollerInst;
+
+    int i = 0;
     private bool playerNumberOne;
     void Start()
     {
@@ -45,6 +48,10 @@ public class gunControll : MonoBehaviour
                     shoot();
                 }
             }
+            if (Input.GetKeyDown("1"))
+            {
+                shootRoller();
+            }
         }
         else
         {
@@ -72,7 +79,7 @@ public class gunControll : MonoBehaviour
     bool pickUpShoot;
     void shoot()
     {
-        pickUpShoot = playerGO.GetComponent<playerMove>().pickUpShoot;
+        pickUpShoot = playerGO.GetComponent<PlayerMove>().pickUpShoot;
         Rigidbody rbBullet;
         //get GunCube Pos and Rotation
         gunCubeSpawnPos = gunCubeSpawn.transform.position;
@@ -82,11 +89,19 @@ public class gunControll : MonoBehaviour
         i = 20;
         if (pickUpShoot)
         {
-            bulletInst.GetComponent<Rigidbody>().mass = bulletInst.GetComponent<Rigidbody>().mass / 2f;
+            //bulletInst.GetComponent<Rigidbody>().mass = bulletInst.GetComponent<Rigidbody>().mass / 2f;
             i = 10;
         }
         //add force
         rbBullet = bulletInst.GetComponent<Rigidbody>();
         rbBullet.AddForce(this.transform.up * 2f, ForceMode.Impulse);
+    }
+    void shootRoller()
+    {
+        gunCubeSpawnPos = gunCubeSpawn.transform.position;
+        gunCubeSpawnRot = gunCubeSpawn.transform.rotation;
+        rollerInst = Instantiate(rollerGO, gunCubeSpawnPos, gunCubeSpawnRot) as GameObject;
+        Rigidbody rbRoller = rollerInst.GetComponent<Rigidbody>();
+        rbRoller.AddForce(this.transform.up * 20f, ForceMode.Impulse);
     }
 }
